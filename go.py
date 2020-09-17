@@ -26,12 +26,6 @@ def time_to_sec(time):
 
     list_time = time.split(':')
 
-    for i in list_time:
-        if not i.isdigit():
-            if i != 'x':
-                print(f'Valor inserido é inválido: "{time}". Utilize o formato "hh:mm:ss"')
-            exit()
-
     list_time = list_time[::-1]
     
     for i, val in enumerate(list_time):
@@ -48,12 +42,26 @@ def sec_to_time(seconds):
     
     return f'{hour:02d}:{min:02d}:{sec:02d}'
 
-#countdown(input('Digite o tempo (hh:mm:ss): '))
-#countdown(sys.argv[1])
-#print(sys.argv[1])
 
-entrada = '1'
+def get_time():
 
-while entrada != 'x':
-     entrada = input('Digite o tempo: ')
-     countdown(entrada)
+    comando_saida = False    
+
+    while not comando_saida:
+        entrada_valida = True
+        user_input = input('Digite o tempo (x-sair): ')
+
+        if user_input == 'x':
+            exit()  
+    
+        list_time = user_input.split(':')
+
+        for i in list_time:
+            if not i.isdigit():
+                print(f'Valor inserido é inválido: "{user_input}". Utilize o formato "hh:mm:ss"')
+                entrada_valida = False                    
+        
+        if entrada_valida:
+            countdown(user_input)
+      
+get_time()
