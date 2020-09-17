@@ -1,0 +1,10 @@
+__pycache__
+.vscode
+.venv
+xml
+database.db
+*.log
+*.csv
+*.xlsx
+files
+run.bat
