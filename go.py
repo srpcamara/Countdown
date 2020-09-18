@@ -1,9 +1,19 @@
 import time
 import winsound
 import sys
+import configparser
 
-multiplicadores = [1, 60, 3600, 86400]
+multiplieries = [1, 60, 3600, 86400]
 global seconds
+global utilizar_motivo
+
+def load_config(arquivo):    
+
+    config = configparser.ConfigParser()
+    config.read(arquivo)
+
+    return config.get('GERAL', 'utilizar_motivo')
+
 
 def countdown(timer, motivo):
 
@@ -32,7 +42,7 @@ def time_to_sec(time):
     list_time = list_time[::-1]
     
     for i, val in enumerate(list_time):
-        seconds = seconds + int(list_time[i]) * int(multiplicadores[i])
+        seconds = seconds + int(list_time[i]) * int(multiplieries[i])
     
     return(seconds)
 
@@ -51,7 +61,7 @@ def get_time():
     comando_saida = False    
 
     while not comando_saida:
-        entrada_valida = True
+        valid_input = True
         user_input = input('Digite o tempo (x-sair): ')
 
         if user_input == 'x':
@@ -62,11 +72,16 @@ def get_time():
         for i in list_time:
             if not i.isdigit():
                 print(f'Valor inserido é inválido: "{user_input}". Utilize o formato "hh:mm:ss"')
-                entrada_valida = False                    
+                valid_input = False                    
         
-        user_input_motivo = input('Digite o motivo: ')
+        utilizar_motivo = bool(int(load_config('app.conf')))
+        
+        if utilizar_motivo:
+            user_input_motivo = input('Digite o motivo: ')
+        else:
+            user_input_motivo = ''
 
-        if entrada_valida:
+        if valid_input:
             countdown(user_input, user_input_motivo)
-      
+
 get_time()
