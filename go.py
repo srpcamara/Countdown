@@ -5,18 +5,21 @@ import sys
 multiplicadores = [1, 60, 3600, 86400]
 global seconds
 
-def countdown(t):
+def countdown(timer, motivo):
 
-    seg = time_to_sec(t)
+    seg = time_to_sec(timer)
+
+    if motivo == '':
+        motivo = 'Motivo não informado'
 
     while seg > 0:
-        if seg < 6:
+        if seg < 4:
            winsound.Beep(2500, 100)
         print(sec_to_time(seg), end = '\r')
         seg -= 1
         time.sleep(1)
        
-    print("Tempo encerrado!")
+    print(f"Tempo encerrado: {motivo}")
     winsound.Beep(1000, 1000)
 
 
@@ -61,7 +64,9 @@ def get_time():
                 print(f'Valor inserido é inválido: "{user_input}". Utilize o formato "hh:mm:ss"')
                 entrada_valida = False                    
         
+        user_input_motivo = input('Digite o motivo: ')
+
         if entrada_valida:
-            countdown(user_input)
+            countdown(user_input, user_input_motivo)
       
 get_time()
